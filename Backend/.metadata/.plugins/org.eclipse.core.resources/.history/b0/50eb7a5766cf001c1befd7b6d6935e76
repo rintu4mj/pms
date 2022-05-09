@@ -1,0 +1,49 @@
+package com.project.pmstool.ms.notification.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.project.pmstool.ms.notification.dto.ProjectHistoryDTO;
+import com.project.pmstool.ms.notification.services.ProjectNotificationService;
+
+import java.util.ArrayList;
+
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/notifications")
+public class ProjectNotificationController {
+
+	@Autowired
+	private ProjectNotificationService projectNotificationService;
+
+	@PostMapping("/saveProjectHistory")
+	public void saveProjectHistory(@RequestBody ProjectHistoryDTO projectHistoryDTO) {
+
+		projectNotificationService.save(projectHistoryDTO);
+
+	}
+
+	@GetMapping("/getProjectHistory")
+	public List<ProjectHistoryDTO> getProjectHistoryList() {
+
+		List<ProjectHistoryDTO> projectHistoryList = null;
+		try {
+
+			projectHistoryList = projectNotificationService.getNotifications();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return projectHistoryList;
+
+	}
+
+}

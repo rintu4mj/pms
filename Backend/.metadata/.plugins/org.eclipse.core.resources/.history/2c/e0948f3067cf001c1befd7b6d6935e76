@@ -1,0 +1,37 @@
+package com.project.pmstool.ms.controller;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.project.pmstool.ms.services.ProjectDataService;
+
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/counts/")
+public class ProjectCounterController {
+
+	private static final Logger logger = LogManager.getLogger("ProjectCounterController");
+
+	private final ProjectDataService projectService;
+
+	public ProjectCounterController(ProjectDataService projectService) {
+		this.projectService = projectService;
+	}
+
+	@GetMapping("/totalCompleted")
+	public Integer getAllCompletedProjects() {
+
+		return projectService.getTotalCompletedProjects();
+	}
+
+	@GetMapping("/totalInProgress")
+	public Integer getAllInProgressProjects() {
+
+		return projectService.getTotalInProgressProjects();
+	}
+
+}

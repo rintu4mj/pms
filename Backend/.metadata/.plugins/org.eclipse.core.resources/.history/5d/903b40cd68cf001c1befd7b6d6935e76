@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-count-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pms-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pms-app
+    spec:
+      containers:
+        - name: project-count-deployment
+          image: gcr.io/double-aleph-348710/project-count:latest
+          ports:
+            - containerPort: 8201
+         
+
+          
+
+---
+
+apiVersion: v1 # Kubernetes API version
+kind: Service # Kubernetes resource kind we are creating
+metadata: # Metadata of the resource kind we are creating
+  name: project-count-service
+spec:
+  selector:
+    app: pms-app
+  ports:
+    - protocol: "TCP"
+      port: 8201 # The port that the service is running on in the cluster
+      targetPort: 8201 # The port exposed by the service
+  type: ClusterIP # type of the service.
+
